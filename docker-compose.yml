@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+
+  scanner:
+    build: ./scanner
+    container_name: vulnforge-scanner
+    tty: true
+
+  postgres:
+    image: postgres:16
+
+    container_name: vulnforge-db
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: vulnforge
+      POSTGRES_PASSWORD: vulnforge
+      POSTGRES_DB: vulnforge
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
